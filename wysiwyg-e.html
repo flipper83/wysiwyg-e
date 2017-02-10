@@ -412,7 +412,7 @@ Command                                 | Mac Shortcut                          
 		<iron-a11y-keys target="[[target]]" keys="delete" on-keys-pressed="_delete"></iron-a11y-keys>
 		<iron-media-query query="(min-width: 768px)" query-matches="{{minWidth768px}}"></iron-media-query>
 		<div class="fit" id="layout" force-narrow$="[[forceNarrow]]">
-			<div id="toolbar" on-tap="updateTools">
+			<div id="toolbar" on-tap="updateTools" hidden$="[[hideToolbar]]">
 				<paper-button id="scrollPrevious" on-up="_onScrollButtonUp" on-down="_onScrollPrevious"  disabled="[[!canScrollPrevious]]">
 					<iron-icon icon="[[_scrollPreviousIcon(minWidth768px, forceNarrow)]]"></iron-icon>
 				</paper-button>
@@ -504,6 +504,13 @@ Command                                 | Mac Shortcut                          
 					 * If true, force narrow view with vertical toolbar.	Defaults to false.
 					*/
 					forceNarrow: {
+						type: Boolean,
+						value: false
+					},
+					/**
+					 * Option to hide the toolbar.	Defaults to false.
+					*/
+					hideToolbar: {
 						type: Boolean,
 						value: false
 					},
@@ -735,10 +742,10 @@ Command                                 | Mac Shortcut                          
 
 					//Remove P children of Ps
 					var Ps = this.target.querySelectorAll('p');
-					
+
 					for (i = 0; i < Ps.length; i += 1) {
 						var childPs = Ps[i].querySelectorAll('p');
-						
+
 						for (j = 0; j < childPs.length; j += 1) {
 							childPs[j].outerHTML = childPs[j].textContent;
 							if (this.logging) console.log('p child of p');
