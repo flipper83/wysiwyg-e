@@ -44,7 +44,7 @@
 		"prism-element": "PolymerElements/prism-element#^1.2.0",
 		"marked-element": "PolymerElements/marked-element#^1.4.0",
 		"iron-component-page": "PolymerElements/iron-component-page#^1.1.0",
-		"selection-mgr": "miztroh/selection-mgr#^1.1.0",
-		"undo-mgr": "miztroh/undo-mgr#^1.1.0"
+		"selection-mgr": "miztroh/selection-mgr#^1.0.0",
+		"undo-mgr": "miztroh/undo-mgr#^1.0.0"
 	}
 }
