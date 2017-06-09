@@ -195,6 +195,14 @@ Command                                 | Mac Shortcut                          
 				@apply(--layout-flex);
 			}
 
+			#editable[show-placeholder]:before {
+ 				content: attr(placeholder);
+ 				display: block;
+ 				position: absolute;
+ 				font-style: italic;
+ 				@apply --wysiwyg-editable-placeholder;
+ 			}
+
 			#editable :first-child {
 				margin-top: 0;
 				@apply(--wysiwyg-editable-first-child);
@@ -435,7 +443,7 @@ Command                                 | Mac Shortcut                          
 				</paper-button>
 			</div>
 			<div id="content">
-				<div id="editable" contenteditable$="[[_edit(mode)]]" hidden$="[[_html(mode)]]"></div>
+				<div id="editable" contenteditable$="[[_edit(mode)]]" placeholder$="[[placeholder]]" show-placeholder$="[[showPlaceholder]]" hidden$="[[_html(mode)]]"></div>
 				<div id="html" hidden$="[[!_html(mode)]]">
 					<pre>
 						<code inner-h-t-m-l="[[_prismHighlight(value)]]"></code>
@@ -537,6 +545,13 @@ Command                                 | Mac Shortcut                          
 						observer: '_modeChanged',
 						reflectToAttribute: true
 					},
+					//
+ 					// Text to show when target's trimmed textContent is blank
+ 					//
+ 					placeholder: {
+ 						type: String,
+ 						value: 'Edit your content here...'
+ 					},
 					/**
 					 * Contains localized versions of text for use with Polymer.AppLocalizeBehavior.
 					*/
@@ -559,6 +574,13 @@ Command                                 | Mac Shortcut                          
 							};
 						}
 					},
+					//
+ 					// Whether placeholder should be shown.  Computed.
+ 					//
+ 					showPlaceholder: {
+ 						type: Boolean,
+ 						computed: '_computeShowPlaceholder(lastMutation)'
+ 					},
 					/**
 					 * Delay for scheduling of scroll jobs for the tool container.	Defaults to 1.
 					*/
@@ -836,7 +858,11 @@ Command                                 | Mac Shortcut                          
 					if (minWidth768px && !forceNarrow) return scrollLeft > 0;
 					return scrollTop > 0;
 				},
-
+			
+				_computeShowPlaceholder: function(value) {
+	 				return this.target && !this.target.textContent.trim().length;
+	 			},
+ 
 				_computeTooltipPosition: function (minWidth768px, forceNarrow) {
 					if (minWidth768px && !forceNarrow) return 'bottom';
 					return 'right';
